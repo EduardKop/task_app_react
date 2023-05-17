@@ -1,7 +1,22 @@
 import styles from '../styles/TaskCard.module.css';
+import React, { useState,useEffect } from 'react';
+import { Button } from 'react-bootstrap';
+import ModalWindowComment from './ModalComment'
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { saveProductData } from '../store';
 
-export default function TaskCard({id,name,count,height,width,weight,coments, deleteTask}) {
-   
+export default function TaskCard({id,name,count,height,width,weight,comments, deleteTask}) {
+   const [showModal, setShowModal] = useState(false);
+   const dispatch = useDispatch();
+
+   const handleOpenModal = () => {
+      setShowModal(true);
+      dispatch(saveProductData(id));
+      
+    };
+    const savedProductId = useSelector((state) => state.productData);
+
    return(
    <>
       <div className={styles.taskCardWrapper}>
@@ -20,12 +35,15 @@ export default function TaskCard({id,name,count,height,width,weight,coments, del
       </div> 
 
       <div className={styles.taskCardComments}>
-      <span>Коментарі</span>
       <div className={styles.taskCardCommentsBtn}>
+      <Button onClick={handleOpenModal}>добавити коментар</Button>
       </div>
-      <div className={styles.taskCardCommentsArea}>
-      <span>{coments}</span>
-      </div>
+      <ModalWindowComment showModal={showModal} setShowModal={setShowModal} savedProductId={savedProductId}/>
+
+      <span>Коментарі</span>
+         <div className={styles.taskCardCommentsArea}>
+            <span>{comments}</span>
+         </div>
       </div>
       </div>
    </>

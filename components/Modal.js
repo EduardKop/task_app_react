@@ -39,7 +39,10 @@ function ModalWindow({ showModal, setShowModal }) {
           'width':height,
           'height':height
         },
-        'weight':weight
+        'weight':weight,
+        'comments':{
+          'new1':'sdsds'
+        }
       });
     
     
@@ -54,12 +57,6 @@ function ModalWindow({ showModal, setShowModal }) {
 
    
   };
-
-  useEffect(() => {
-    console.log(productData);
-   
-
-  }, [productData]);
 
 
   return (

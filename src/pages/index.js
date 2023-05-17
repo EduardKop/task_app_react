@@ -12,17 +12,14 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const [tasks, setTasks] = useState([]); 
 
-  useEffect(() => {//take data from the firebase and add it to the state
+  useEffect(() => {
       const tasksRef =  ref(db, 'TasksData')
       onValue(tasksRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {
           setTasks(Object.values(data));
         }
-      })
-   
-      console.log(tasks)
-    
+      })    
   }, []);
 
   
@@ -32,7 +29,6 @@ export default function Home() {
       const data = snapshot.val();
       Object.values(data).forEach((task) => {
         if (task.id === id) {
-          console.log(id);
           const taskToDeleteRef = ref(db, `TasksData/${id}`);
           set(taskToDeleteRef, null)
           .then(() => {
