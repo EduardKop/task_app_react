@@ -10,7 +10,7 @@ import { ref, push, onValue, set } from "firebase/database";
 import { app } from '../lib/firebase'; 
 import { db } from '../lib/firebase';
 
-function ModalWindow({ showModal, setShowModal }) {
+function ModalWindow({ showModal, setShowModal, comments }) {
   const productData = useSelector((state) => state.productData);
 
   const [name, setName]   = useState('');
@@ -41,7 +41,7 @@ function ModalWindow({ showModal, setShowModal }) {
         },
         'weight':weight,
         'comments':{
-          'new1':'sdsds'
+         
         }
       });
     

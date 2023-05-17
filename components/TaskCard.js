@@ -13,7 +13,8 @@ export default function TaskCard({id,name,count,height,width,weight,comments, de
    const handleOpenModal = () => {
       setShowModal(true);
       dispatch(saveProductData(id));
-      
+     
+
     };
     const savedProductId = useSelector((state) => state.productData);
 

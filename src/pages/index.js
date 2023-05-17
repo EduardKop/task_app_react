@@ -22,25 +22,30 @@ export default function Home() {
       })    
   }, []);
 
-  
-  const deleteTask = (id) => { //Delete cards
+  const deleteTask = (id) => {
     const taskRef = ref(db, 'TasksData');
     onValue(taskRef, (snapshot) => {
       const data = snapshot.val();
-      Object.values(data).forEach((task) => {
-        if (task.id === id) {
-          const taskToDeleteRef = ref(db, `TasksData/${id}`);
-          set(taskToDeleteRef, null)
-          .then(() => {
-            console.log(`Task ${name} deleted successfully`);
-          })
-          .catch((error) => {
-            console.error("Error deleting task:", error);
-          });
-        }
-      });
+      if (data) {
+        const tasks = Object.values(data);
+        tasks.forEach((task) => {
+          if (task.id === id) {
+            const taskToDeleteRef = ref(db, `TasksData/${id}`);
+            set(taskToDeleteRef, null)
+              .then(() => {
+                console.log(`Task ${task.name} deleted successfully`);
+                const updatedTasks = tasks.filter((t) => t.id !== id);
+                setTasks(updatedTasks);
+              })
+              .catch((error) => {
+                console.error("Error deleting task:", error);
+              });
+          }
+        });
+      }
     });
   };
+  
 
 
   return (
@@ -68,7 +73,7 @@ export default function Home() {
               width={task.size ? task.size.width : ''}
               height={task.size ? task.size.height : ''}
               weight={task.weight} 
-              comments='немає коментарів'
+              comments={task.comments ? Object.values(task.comments).map(comment => typeof comment === 'object' ? Object.values(comment).join(', ') : comment).join(', ') : 'немає коментарів'}
               deleteTask={deleteTask}
             />
           ))
