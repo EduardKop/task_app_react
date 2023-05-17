@@ -18,11 +18,11 @@ function Header({title,description}) {
     <header className="app-header">
       <section className={styles.appTitle}>
         <h1>{title}</h1>
-        <small>{description}</small>
+       
       </section>
    
       <section className={styles.addNewTaskBtn}>
-      <Button onClick={handleOpenModal}>Open Modal</Button>
+      <Button onClick={handleOpenModal}>Добавити картку</Button>
       <ModalWindow showModal={showModal} setShowModal={setShowModal} />
 
       </section>
